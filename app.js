@@ -7,11 +7,15 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine", "ejs");
 
+app.get("/", Controller.homePage)
+
 app.get("/login", Controller.loginForm);
 
 app.get("/register", Controller.registerForm);
 
 app.post("/register", Controller.registerForm);
+
+
 
 
 
