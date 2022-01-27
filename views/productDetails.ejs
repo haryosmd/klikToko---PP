@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./component/heading.ejs') -%>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <%- include('./component/navbar.ejs') -%>
+  
+  </nav>
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="product-details">
+            <br>
+            <div class="section-title">
+              <h3 class="title"><%= data.name %></h3>
+            </div>
+            <br>
+            <div>
+              <img class="card-img-top rounded" src="<%= data.imageUrl %>" />
+            </div>
+          </div>
+          <br>
+          <div class="col-md-10 order-details">
+            <p> <%= data.description %> </p>
+          </div>
+          </div>
+          <div class="col-md-5">
+            <div class="align-self-center">
+              <div><h4>2000 Diamond</h4><button type="submit"  class="btn btn-outline-dark mt-auto"> <%= changeIdr(data.price[0]) %> </button></div>
+              <br>
+              <div><h4>6000 Diamond</h4><button type="submit"  class="btn btn-outline-dark mt-auto"> <%= changeIdr(data.price[1]) %> </button></div>
+              <br>
+              <div><h4>10000 Diamond</h4><button type="submit"  class="btn btn-outline-dark mt-auto"> <%= changeIdr(data.price[2]) %> </button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>

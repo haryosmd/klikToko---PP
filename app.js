@@ -9,6 +9,10 @@ app.set("view engine", "ejs");
 
 app.get("/", Controller.homePage)
 
+app.get('/profile', Controller.userProfile)
+
+app.get('/product/:id', Controller.productDetails)
+
 app.get("/login", Controller.loginForm);
 
 app.get("/register", Controller.registerForm);

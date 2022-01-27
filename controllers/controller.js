@@ -1,23 +1,38 @@
 const { User, Product, Category } = require("../models");
 const { Op } = require("sequelize");
-
+const changeIdr = require('../helpers/changeIDR')
 class Controller {
     
   static homePage(req, res) {
-    const { name } = req.query;
+    const { name, categoryName } = req.query;
+
     let options
-    if (name) {
-        options = {
-          where: {
-            name: {
-              [Op.iLike]: `%${name}%`,
-            },
-          },
-        }; 
-    }
+
+    if (name || categoryName) {
+        if (name) {
+            options = {
+              where: {
+                name: {
+                  [Op.iLike]: `%${name}%`,
+                },
+              },
+            }; 
+        } else if (categoryName) {
+            options = {
+                include: {
+                    model: Category,
+                    where: {
+                        name: {
+                            [Op.iLike]: `%${categoryName}%` 
+                        }
+                      },
+                }    
+              }; 
+        }
+    } 
 
     let dataProduct;
-    Product.findAll(options)
+      Product.findAll(options)
       .then((data) => {
         dataProduct = data;
         return Category.findAll();
@@ -49,5 +64,21 @@ class Controller {
         res.send(err);
       });
   }
+
+
+  static productDetails(req, res) {
+    let { id } = req.params
+    Product.findByPk(id)
+    .then((data) => {
+        res.render('productDetails', {data, changeIdr})
+    })
+    .catch((err) => {
+        res.send(err)
+    })
+  }
+
+static userProfile(req, res) {
+   res.render('userProfile') 
+}
 }
 module.exports = Controller;
