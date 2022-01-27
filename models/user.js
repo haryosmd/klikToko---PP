@@ -3,6 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+  const bcrypt = require('bcryptjs')
   class User extends Model {
     /**
      * Helper method for defining associations.
@@ -10,15 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.belongsTo(models.UserDetail, {foreignKey: "UserDetailId"})
+
     }
   }
   User.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
+    UserDetailId: DataTypes.INTEGER 
   }, {
     sequelize,
+    hooks: {
+      beforeCreate(instance, option) {
+        const salt = bcrypt.genSaltSync(8);
+        const hash = bcrypt.hashSync(instance.password, salt)
+        instance.password = hash  
+      }
+    },
     modelName: 'User',
   });
   return User;
